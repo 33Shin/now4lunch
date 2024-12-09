@@ -23,8 +23,8 @@ app.options('/*', (req, res) =>
     requestHandler.onRequest(req, res);
 });
 
-const server: any = https.createServer(app);
-const wss = new Server(server);
+const server = https.createServer(app);
+const wss = new Server({ server });
 initChatServer(wss);
 
 console.log("Listen http request on port 8181");
