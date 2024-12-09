@@ -2,7 +2,7 @@ var socket = null;
 var unreadCount = 0;
 
 function initChat() {
-    socket = new WebSocket('ws://192.168.164.212:8080');
+    socket = new WebSocket(`ws://${window.location.host}:8080`);
 
     socket.onopen = () => {
         console.log('Connected to server');
@@ -122,8 +122,7 @@ function showUnreadIcon() {
         icon.style.display = 'flex';
         icon.innerHTML = unreadCount;
     }
-    else
-    {
+    else {
         hideUnreadIcon();
     }
 }

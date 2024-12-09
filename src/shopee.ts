@@ -1,7 +1,7 @@
 import fs from 'fs';
 import { getDetail, getFromUrl } from "./api";
 
-var shop_json = fs.readFileSync('database/shop.json', 'utf-8');
+var shop_json = fs.readFileSync(process.cwd() + '/database/shop.json', 'utf-8');
 var LIST_SHOP_URL = JSON.parse(shop_json);
 
 var SHOP_DATA: any[] = [];

@@ -51,9 +51,9 @@ export async function getMenu(id: number | string)
     return response;
 }
 
-export async function getFromUrl(url: string)
+export async function getFromUrl(shopeeUrl: string)
 {
-    var url = 'https://gappapi.deliverynow.vn/api/delivery/get_from_url?url=' + url.split('shopeefood.vn/').slice(-1);
+    var url = 'https://gappapi.deliverynow.vn/api/delivery/get_from_url?url=' + shopeeUrl.split('shopeefood.vn/').slice(-1);
     var res = await fetch(url, {
         method: 'GET',
         headers: HEADER
