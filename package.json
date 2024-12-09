@@ -19,11 +19,15 @@
   "dependencies": {
     "@types/crypto-js": "^4.2.2",
     "@types/jssha": "^3.0.0",
+    "@types/nodemon": "^1.19.6",
     "@types/ws": "^8.5.13",
     "crunch": "^0.1.2",
     "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
     "express-ws": "^5.0.2",
-    "jssha": "^3.3.1"
+    "jssha": "^3.3.1",
+    "nodemon": "^3.1.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
   }
 }
