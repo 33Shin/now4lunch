@@ -10,9 +10,8 @@ var list_message: any[] = [
     }
 ];
 
-export function initChatServer()
+export function initChatServer(server: Server)
 {
-    const server = new Server({ port: 8080 });
     server.on('connection', (socket: WebSocket, req: any) =>
     {
         var ip = req.socket.remoteAddress;

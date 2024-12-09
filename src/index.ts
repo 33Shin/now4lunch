@@ -1,26 +1,31 @@
 import express from 'express';
+import https from 'https';
+import { Server } from 'ws';
 import { initChatServer } from './chat-server';
-import { Server } from './server';
+import { LocalServer } from './local-server';
 
 const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 
-initChatServer();
-var server = new Server();
+var requestHandler = new LocalServer();
 
 app.post('/*', (req, res) =>
 {
-    server.onConfirm(req, res);
+    requestHandler.onConfirm(req, res);
 });
 app.get('/*', (req, res) =>
 {
-    server.onRequest(req, res);
+    requestHandler.onRequest(req, res);
 });
 app.options('/*', (req, res) =>
 {
-    server.onRequest(req, res);
+    requestHandler.onRequest(req, res);
 });
 
+const server: any = https.createServer(app);
+const wss = new Server(server);
+initChatServer(wss);
+
 console.log("Listen http request on port 8181");
-app.listen(80);
+server.listen(80);

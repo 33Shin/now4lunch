@@ -25,6 +25,7 @@
     "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
     "express-ws": "^5.0.2",
+    "https": "^1.0.0",
     "jssha": "^3.3.1",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",

@@ -5,7 +5,7 @@ import { Cart } from "./cart";
 import { createMenu } from "./create-menu";
 import { getAllShopDetail } from "./shopee";
 
-export class Server
+export class LocalServer
 {
     private cart: Cart = new Cart();
 
