@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;    
+    background-image: url('https://sushiworld.com.vn/wp-content/uploads/2020/10/background.jpg');
+}
+
+h1 {
+    text-align: center;
+}
+
+.theme-toggle {
+    display: block;
+    margin: 0 auto 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Table Styling */
+table {
+    max-width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    text-align: left;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: bold;
+}
+
+th {
+    background-color: var(--header-bg-color);
+    color: var(--header-text-color);
+    text-transform: uppercase;
+}
+
+td {
+    background-color: var(--cell-bg-color);
+}
+
+tr:hover td {
+    background-color: var(--hover-bg-color);
+}
+
+/* Light Theme Variables */
+:root {
+    --bg-color: #FFF5E1;
+    --text-color: #5D4037;
+    --border-color: #E6B89C;
+    --header-bg-color: #FFB347;
+    --header-text-color: #FFF;
+    --first-col-bg-color: #FFD59E;
+    --cell-bg-color: #FFF7E6;
+    --hover-bg-color: #FFE4B5;
+    --button-bg: #FFB347;
+    --button-text: #FFF;
+}
+
+/* Dark Theme Variables */
+.dark-mode {
+    --bg-color: #2C2C2C;
+    --text-color: #E0E0E0;
+    --border-color: #444;
+    --header-bg-color: #444;
+    --header-text-color: #FFD700;
+    --first-col-bg-color: #555;
+    --cell-bg-color: #333;
+    --hover-bg-color: #444;
+    --button-bg: #FFD700;
+    --button-text: #2C2C2C;
+}
+
+body, .theme-toggle {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.theme-toggle {
+    background-color: var(--button-bg);
+    color: var(--button-text);
+}

@@ -1,0 +1,29 @@
+{
+  "name": "local-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.1"
+  },
+  "dependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/jssha": "^3.0.0",
+    "@types/ws": "^8.5.13",
+    "crunch": "^0.1.2",
+    "crypto": "^1.0.1",
+    "crypto-js": "^4.2.0",
+    "express-ws": "^5.0.2",
+    "jssha": "^3.3.1"
+  }
+}

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cơm trưa của Toys</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            /* Light background */
+            color: #333;
+            display: block;
+        }
+
+        /* Navigation Container */
+        .navbar {
+            background-color: #ff7f50;
+            /* Coral color for the header */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navigation Links */
+        .navbar a {
+            color: #fff;
+            /* White text for links */
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 10px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #ffa07a;
+            /* Light coral on hover */
+        }
+
+        /* Content Area */
+        .content {
+            padding: 20px;
+            text-align: center;
+            text-shadow:
+                1px 1px 2px white,
+                -1px -1px 2px white,
+                1px -1px 2px white,
+                -1px 1px 2px white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="video-background"
+        style="display: none; position: fixed; opacity: 0.5; object-fit: cover; width: 100%; height: 100%; overflow: hidden;">
+        <video id="video" class="background-video" autoplay loop
+            style="position: relative; width: 100%; height: 100%; object-fit: cover;">
+            <source src="" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="content" style="position: fixed; display: block; width: 100%; height: 100%;">
+        <br>
+        <h1>Dành cho nhân viên của Toys</h1>
+        <p>Click vào <a href="/menu"><b>"Đặt Món"</b></a> để xem danh sách món hoặc chọn <a href="/cart"><b>"Xem Đơn
+                    Hàng"</b></a> để kiểm tra đơn</p>
+        <p>Thời gian đặt món từ 10h30 - 11h mỗi ngày</p>
+        <p>Rủ nhau cùng đặt chung để giảm giá ship nha</p>
+        <br>
+        <img src="https://media.tenor.com/UnqSW11KKoUAAAAj/my-fuzzy.gif" style="padding-right: 39px; cursor: pointer;"
+            onclick="changeBackground()">
+
+    </div>
+
+    <script>
+        var count = 0;
+        document.body.style.backgroundImage = "url('https://sushiworld.com.vn/wp-content/uploads/2020/10/background.jpg')";
+        function changeBackground() {
+            switch (count) {
+                case 0:
+                    document.body.style.backgroundImage = "url('../background/bg1.jpg')";
+                    break;
+                case 1:
+                    document.body.style.backgroundImage = "url('../background/bg2.jpg')";
+                    break;
+                case 2:
+                    document.body.style.backgroundImage = "";
+                    document.body.style.backgroundColor = '#f6f1ef';
+                    break;
+                case 3:
+                    document.body.style.backgroundImage = "url('../background/bg3.jpg')";
+                    break;
+                case 4:
+                    document.body.style.backgroundImage = "url('https://sushiworld.com.vn/wp-content/uploads/2020/10/background.jpg')";
+                    break;
+                case 5:
+                    document.body.style.backgroundImage = "url('../background/bg4.jpg')";
+                    break;
+                case 6:
+                    document.body.style.backgroundImage = "url('../background/bg5.jpg')";
+                    break;
+                case 7:
+                    document.body.style.backgroundImage = "";
+                    document.body.style.backgroundColor = '#FFC0CB';
+                    break;
+                case 8:
+                    playVideo('video1');
+                    break;
+                case 9:
+                    playVideo('video2');
+                    break;
+                case 10:
+                    playVideo('video3');
+                    break;
+                case 11:
+                    playVideo('video4');
+                    break;
+                case 12:
+                    stopVideo();
+                    document.body.style.backgroundColor = '#ffffff';
+                    document.body.style.backgroundImage = "url('https://sushiworld.com.vn/wp-content/uploads/2020/10/background.jpg')";
+                    count = -1;
+                    break;
+                default:
+                    break;
+            }
+            count++;
+        }
+
+        function playVideo(src) {
+            document.body.style.backgroundImage = '';
+            var videoBackground = document.getElementById('video-background');
+            var videoSrc = document.getElementById('video');
+            videoBackground.style.display = 'block';
+            videoSrc.src = `../background/${src}.mp4`;
+            videoSrc.play();
+        }
+
+        function stopVideo() {
+            var videoBackground = document.getElementById('video-background');
+            var videoSrc = document.getElementById('video');
+            videoBackground.style.display = 'none';
+            videoSrc.pause();
+            videoSrc.currentTime = 0;
+        }
+    </script>
+</body>
+
+</html>

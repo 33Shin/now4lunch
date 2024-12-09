@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đơn Hàng</title>
+    <script src="cart.js"></script>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div style="position: fixed; display: grid; align-items: center;">
+        <a href="../menu" style="font-weight: bold; align-items: end;"><img src="./menu.png" alt="Quay về Menu" width="80" height="80"></a>
+        <a href="../menu" style="font-weight: bold; align-items: end;">Chọn món</a>
+    </div>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Tên</th>
+                <th>Món</th>
+                <th>Giá</th>
+                <th>Quán</th>
+                <th>Note</th>
+                <th>Hủy</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        requestCart();
+        function formatPrice(price) {
+            return Math.ceil(price / 1000) + 'k';
+        }
+    </script>
+</body>
+
+</html>

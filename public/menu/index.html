@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toys Đặt Món</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/modal.css">
+    <link rel="stylesheet" href="./css/cart.css">
+    <link rel="stylesheet" href="./css/chat.css">
+    <link rel="stylesheet" href="./css/notification.css">
+    <script src="script/menu.js"></script>
+    <script src="script/cart.js"></script>
+    <script src="script/seller.js"></script>
+    <script src="script/init.js"></script>
+    <script src="script/modal.js"></script>
+    <script src="script/chat.js"></script>
+    <script src="script/notification.js"></script>
+    <script src="../loading/loading.js"></script>
+    <link rel="stylesheet" href="../loading/loading.css">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <!-- Notifications Container -->
+    <div id="notifications-container"></div>
+    <div class="content">
+
+        <div class="sidebar">
+            <h3>Chọn Quán</h3>
+            <select id="sellerDropdown" onchange="requestChangeSeller(this.value)"></select>
+            <h3>MENU</h3>
+            <div class="menu_button">
+            </div>
+        </div>
+
+        <!-- Food Menu Grid -->
+        <div class="menu-container" id="menu-container">
+            <!-- Menu items will be added dynamically here -->
+        </div>
+
+        <div class="result">
+
+            <br>
+            <div class="cart-container">
+                <h2 href="../cart" style="display: flex; align-items: center;">
+                    ĐƠN HÀNG
+                    <a href="../cart"><img src="./cart.png" alt="" width="40" height="40"></a>
+                </h2>
+
+                <!-- Cart Section -->
+                <div>
+                    <ul class="cart-list" id="cart-list">
+                        <!-- Selected items will appear here -->
+                    </ul>
+                </div>
+                <div class="cart-summary" style="display: none">
+                    <h2>Tổng tiền: 50k</h2>
+                </div>
+            </div>
+
+            <div class="confirm">
+                <button onclick="submit()">Chốt Đơn</button>
+                <br>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)" style="display: none;">
+        <div class="modal" onclick="stopPropagation(event)">
+            <div id="selected_item" style="display: flex;"></div>
+            <div id="topping-category" class="topping-category">
+            </div>
+            <button onclick="submitTopping()">Chọn xong</button>
+        </div>
+    </div>
+
+    <!-- Chat Button -->
+    <div
+        style="position: fixed; display: grid; bottom: 0; right: 0; align-items: center; text-align: center; justify-content: space-between;">
+        <img class="chat-button" src="./chat.png" onclick="toggleChat()"></img>
+        <div class="unread-icon" id="unread-icon">1</div>
+    </div>
+
+    <!-- Chat Popup -->
+    <div class=" chat-popup" id="chatPopup">
+        <div class="header">
+            Rủ rê đặt chung nè
+            <button onclick="toggleChat()"
+                style="float: right; background: none; border: none; color: white; font-size: 16px; cursor: pointer;">&times;</button>
+        </div>
+        <div class="messages" id="chatMessages">
+            <!-- Messages will appear here -->
+        </div>
+        <div class="input-area">
+            <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleEnter(event)">
+            <button onclick="sendMessage()">Gửi</button>
+        </div>
+    </div>
+
+    <div
+        style="position: fixed; display: none; bottom: 0; right: 0; align-items: center; text-align: center; justify-content: space-between; padding:  0 20px;">
+        <a href="../cart"><img src="./cart.png" alt="" width="40" height="40"></a>
+        <a href="../cart">Xem Đơn Hàng</a>
+    </div>
+
+    <script>
+        addLoading();
+        init();
+        initChat();
+        function formatPrice(price) {
+            return Math.ceil(price / 1000) + 'k';
+        }
+    </script>
+
+</body>
+
+</html>
