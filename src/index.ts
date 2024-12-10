@@ -1,4 +1,5 @@
 import express from 'express';
+import { initChatServer } from './chat-server';
 import { LocalServer } from './local-server';
 
 const app = express();
@@ -20,6 +21,7 @@ app.options('/*', (req, res) =>
     requestHandler.onRequest(req, res);
 });
 
+initChatServer();
 app.listen(80, ()=> {
     console.log("Listen http request on port 80");
 });
