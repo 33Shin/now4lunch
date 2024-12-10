@@ -1,7 +1,4 @@
 import express from 'express';
-import https from 'https';
-import { Server } from 'ws';
-import { initChatServer } from './chat-server';
 import { LocalServer } from './local-server';
 
 const app = express();
@@ -23,10 +20,6 @@ app.options('/*', (req, res) =>
     requestHandler.onRequest(req, res);
 });
 
-const server = https.createServer(app);
-const wss = new Server({ server });
-initChatServer(wss);
-
-server.listen(8080, ()=> {
-    console.log("Listen http request on port 8080");
+app.listen(80, ()=> {
+    console.log("Listen http request on port 80");
 });
