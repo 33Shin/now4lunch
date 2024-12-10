@@ -1,4 +1,3 @@
-import WebSocket, { Server } from 'ws';
 import { IDENTITY } from './identity';
 
 var list_connection: any[] = [];
@@ -10,10 +9,9 @@ var list_message: any[] = [
     }
 ];
 
-export function initChatServer()
+export function initChatServer(app: any)
 {
-    const server = new Server({ port: 80 });
-    server.on('connection', (socket: WebSocket, req: any) =>
+    app.ws('/ws', (socket: any, req: any) =>
     {
         var ip = req.socket.remoteAddress;
         list_connection.push({
@@ -24,7 +22,7 @@ export function initChatServer()
             type: 0,
             list_message: getListMessage(list_message, ip)
         }));
-        socket.on('message', message =>
+        socket.on('message', (message: any) =>
         {
             var msg: any = {
                 type: 1,
@@ -89,7 +87,7 @@ function getListMessage(list_message: any[], ip: any)
     return listMessage;
 }
 
-function postMessage(message: any, socket?: WebSocket)
+function postMessage(message: any, socket?: any)
 {
     list_connection.forEach(connection =>
     {

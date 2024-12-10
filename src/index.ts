@@ -1,4 +1,5 @@
 import express from 'express';
+import expressWs from 'express-ws';
 import { initChatServer } from './chat-server';
 import { LocalServer } from './local-server';
 
@@ -21,7 +22,10 @@ app.options('/*', (req, res) =>
     requestHandler.onRequest(req, res);
 });
 
-initChatServer();
-app.listen(80, ()=> {
+expressWs(app);
+
+initChatServer(app);
+app.listen(80, () =>
+{
     console.log("Listen http request on port 80");
 });
