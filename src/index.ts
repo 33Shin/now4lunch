@@ -23,8 +23,8 @@ app.options('/*', (req, res) =>
 });
 
 expressWs(app);
-
 initChatServer(app);
+
 app.listen(80, () =>
 {
     console.log("Listen http request on port 80");
