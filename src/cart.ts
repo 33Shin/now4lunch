@@ -4,14 +4,14 @@ import { chat, notify } from './chat-server';
 
 const KEY = "WeAreToys!";
 
-export class Cart 
+class Cart 
 {
     private cart: Map<string, any[]> = new Map();
     private currentTime: string = '';
 
     add(cartData: any, ip: string)
     {
-        console.log(cartData);
+        console.log(cartData, ip);
         notify(cartData, ip);
         this.sendToChat(cartData);
 
@@ -72,17 +72,20 @@ export class Cart
         return true;
     }
 
+    reset()
+    {
+        fs.rmSync('log', { force: true, recursive: true });
+        this.cart.clear();
+    }
+
     private log()
     {
-        if (fs.existsSync('log/log.txt'))
-        {
-            fs.renameSync('log/log.txt', 'log/log.' + this.currentTime);
-        }
         fs.mkdirSync('log', { recursive: true });
         fs.writeFileSync('log/log.txt', JSON.stringify(Array.from(this.cart)));
 
         var date = new Date();
         this.currentTime = date.toISOString().split('T')[0] + '_' + date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds();
+        fs.writeFileSync('log/backup.' + this.currentTime, JSON.stringify(Array.from(this.cart)));
     }
 
     private loadLog()
@@ -143,3 +146,7 @@ export class Cart
         return encrypt_ip;
     }
 }
+
+var UserCard = new Cart();
+export { UserCard };
+

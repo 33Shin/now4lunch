@@ -41,4 +41,9 @@ export async function getAllShopDetail()
     return SHOP_DATA;
 }
 
+export function resetShopDetail()
+{
+    SHOP_DATA = [];
+}
+
 getAllShopDetail();

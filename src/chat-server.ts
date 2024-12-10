@@ -33,6 +33,11 @@ export function initChatServer(app: any)
             msg.ip = ip;
             list_message.push(msg);
         });
+        socket.on('close', () =>
+        {
+            var socketIndex = list_connection.indexOf(socket);
+            list_connection.splice(socketIndex, 1);
+        })
     });
 }
 
@@ -60,6 +65,17 @@ export function notify(message: any, ip: string)
             }));
         }
     });
+}
+
+export function resetChat()
+{
+    list_message = [
+        {
+            type: 1,
+            sender: 'Bot',
+            message: 'Rủ bạn bè đặt chung để được giảm ship nha'
+        }
+    ];
 }
 
 function getSender(ip: string)
