@@ -8,6 +8,10 @@ function initChat() {
         console.log('Connected to server');
     };
 
+    socket.onclose = () => {
+        console.log('Connection lost');
+    };
+
     socket.onmessage = event => {
         console.log('Message from server:', event.data);
         var chatData = JSON.parse(event.data);

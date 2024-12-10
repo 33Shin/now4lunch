@@ -3,27 +3,27 @@ import expressWs from 'express-ws';
 import { initChatServer } from './chat-server';
 import { LocalServer } from './local-server';
 
-const app = express();
+const app: any = express();
+expressWs(app);
 app.use(express.static('public'));
 app.use(express.json());
 
+initChatServer(app);
+
 var requestHandler = new LocalServer();
 
-app.post('/*', (req, res) =>
+app.post('/*', (req: any, res: any) =>
 {
     requestHandler.onConfirm(req, res);
 });
-app.get('/*', (req, res) =>
+app.get('/*', (req: any, res: any) =>
 {
     requestHandler.onRequest(req, res);
 });
-app.options('/*', (req, res) =>
+app.options('/*', (req: any, res: any) =>
 {
     requestHandler.onRequest(req, res);
 });
-
-expressWs(app);
-initChatServer(app);
 
 app.listen(80, () =>
 {
