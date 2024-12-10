@@ -27,5 +27,6 @@ const server = https.createServer(app);
 const wss = new Server({ server });
 initChatServer(wss);
 
-console.log("Listen http request on port 8181");
-server.listen(80);
+server.listen(8080, ()=> {
+    console.log("Listen http request on port 8080");
+});
