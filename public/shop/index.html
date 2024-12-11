@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL List with Checkboxes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>SHOPEE URL LIST</h2>
+        <button id="add-url" onclick="addUrl()">Add URL</button>
+        <button id="confirm" onclick="confirm()">Confirm</button>
+    </div>
+    <script>
+        loadShop();
+        async function loadShop() {
+            var res = await fetch('/get_shop');
+            var list_shop = await res.json();
+            list_shop.forEach(shop => {
+                addUrl(shop, true);
+            });
+        }
+        function deleteUrl(button) {
+            const urlItem = button.parentElement;
+            urlItem.remove();
+        }
+
+        function addUrl(url, checked) {
+            const container = document.querySelector('.container');
+            const newUrlItem = document.createElement('div');
+            newUrlItem.classList.add('url-item');
+            newUrlItem.innerHTML = `
+                <input type="checkbox" ${checked ? 'checked' : ''}>
+                <input type="text" value="${url || ''}">
+                <button onclick="deleteUrl(this)">Delete</button>
+            `;
+            container.insertBefore(newUrlItem, document.getElementById('add-url'));
+        }
+        async function confirm() {
+            var res = await fetch('/set_shop', {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+                body: JSON.stringify(getCheckedUrls()),
+            });
+            var response = await res.json();
+            alert(response.result);
+        }
+
+        function getCheckedUrls() {
+            const checkedUrls = [];
+            document.querySelectorAll('.url-item').forEach(item => {
+                const checkbox = item.querySelector('input[type="checkbox"]');
+                const urlInput = item.querySelector('input[type="text"]');
+                checkedUrls.push({
+                    isChecked: checkbox.checked,
+                    url: urlInput.value
+                });
+            });
+            return checkedUrls;
+        }
+    </script>
+</body>
+
+</html>

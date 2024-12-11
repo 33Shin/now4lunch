@@ -1,10 +1,15 @@
 import fs from 'fs';
 import { getDetail, getFromUrl } from "./api";
 
-var shop_json = fs.readFileSync(process.cwd() + '/database/shop.json', 'utf-8');
-var LIST_SHOP_URL = JSON.parse(shop_json);
+var shop_json = fs.readFileSync(process.cwd() + '/database/shop.dat', 'utf-8');
+var LIST_SHOP_URL: string[] = JSON.parse(shop_json);
 
 var SHOP_DATA: any[] = [];
+
+export function getShopURL()
+{
+    return LIST_SHOP_URL;
+}
 
 export async function getAllShopDetail()
 {
@@ -44,6 +49,27 @@ export async function getAllShopDetail()
 export function resetShopDetail()
 {
     SHOP_DATA = [];
+}
+
+export async function setActiveShop(list_shop_data: any)
+{
+    resetShopDetail();
+    LIST_SHOP_URL.length = 0;
+    for (let index = 0; index < list_shop_data.length; index++)
+    {
+        const shopData = list_shop_data[index];
+        if (shopData.isChecked)
+        {
+            LIST_SHOP_URL.push(shopData.url);
+        }
+    }
+    var new_shop_json = list_shop_data.map((shop: any) => shop.url);
+
+    var date = new Date();
+    var currentTime = date.toISOString().split('T')[0] + '_' + date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds();
+    fs.renameSync('database/shop.dat', 'database/shop.dat_' + currentTime);
+    fs.writeFileSync('database/shop.dat', JSON.stringify(new_shop_json));
+    await getAllShopDetail();
 }
 
 getAllShopDetail();

@@ -2,7 +2,8 @@ var socket = null;
 var unreadCount = 0;
 
 function initChat() {
-    socket = new WebSocket(`wss://${window.location.host}/ws`);
+    var protocol = window.location.href.startsWith('https://') ? 'wss' : 'ws';
+    socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
 
     socket.onopen = () => {
         console.log('Connected to server');

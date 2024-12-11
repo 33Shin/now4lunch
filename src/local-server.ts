@@ -3,8 +3,9 @@ import { ParsedQs } from "qs";
 import { getMenu } from "./api";
 import { UserCard } from "./cart";
 import { createMenu } from "./create-menu";
+import { getBackupLog, getBackupLogData, getBackupShop, getBackupShopData } from "./get-backup-file";
 import { resetServer } from "./reset-server";
-import { getAllShopDetail } from "./shopee";
+import { getAllShopDetail, getShopURL, setActiveShop } from "./shopee";
 
 export class LocalServer
 {
@@ -54,6 +55,35 @@ export class LocalServer
                 res.send("Failed to reset. Check username and password.");
             }
         }
+        if (req.url.includes('get_shop'))
+        {
+            var list_shop = getShopURL();
+            res.send(JSON.stringify(list_shop));
+        }
+        if (req.url.includes('database'))
+        {
+            var file = req.url.split('/').slice(-1)[0];
+            if (file != 'database' && file != '')
+            {
+                res.send(JSON.stringify(getBackupShopData(file)));
+            }
+            else
+            {
+                res.send(JSON.stringify(getBackupShop()));
+            }
+        }
+        if (req.url.includes('log'))
+        {
+            var file = req.url.split('/').slice(-1)[0];
+            if (file != 'log' && file != '')
+            {
+                res.send(JSON.stringify(getBackupLogData(file)));
+            }
+            else
+            {
+                res.send(JSON.stringify(getBackupLog()));
+            }
+        }
     }
 
     onConfirm(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>)
@@ -74,6 +104,13 @@ export class LocalServer
             {
                 res.send(JSON.stringify({ result: 'failed' }));
             }
+        }
+        if (req.url.includes('set_shop'))
+        {
+            setActiveShop(req.body).then(() =>
+            {
+                res.send(JSON.stringify({ result: 'success' }));
+            });
         }
     }
 
