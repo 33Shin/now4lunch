@@ -3,7 +3,9 @@ import { ParsedQs } from "qs";
 import { getMenu } from "./api";
 import { UserCard } from "./cart";
 import { createMenu } from "./create-menu";
+import { setDiscount } from "./discount";
 import { getBackupLog, getBackupLogData, getBackupShop, getBackupShopData } from "./get-backup-file";
+import { getPayment } from "./payment";
 import { resetServer } from "./reset-server";
 import { getAllShopDetail, getShopURL, setActiveShop } from "./shopee";
 
@@ -84,6 +86,11 @@ export class LocalServer
                 res.send(JSON.stringify(getBackupLog()));
             }
         }
+        if (req.url.includes('get_payment'))
+        {
+            var payment = getPayment(req.ip || '');
+            res.send(JSON.stringify(payment));
+        }
     }
 
     onConfirm(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>)
@@ -111,6 +118,11 @@ export class LocalServer
             {
                 res.send(JSON.stringify({ result: 'success' }));
             });
+        }
+        if (req.url.includes('set_discount'))
+        {
+            setDiscount(req.body);
+            res.send(JSON.stringify({ result: 'success' }));
         }
     }
 

@@ -68,7 +68,7 @@ function addUserMessage(message) {
 
     const userMessage = document.createElement('div');
     userMessage.className = 'message user';
-    userMessage.textContent = message;
+    userMessage.innerHTML = convertTextToEmoji(message);
 
     //userMessageContainer.appendChild(userName);
     userMessageContainer.appendChild(userMessage);
@@ -93,7 +93,7 @@ function addOtherMessage(message, name) {
 
     const otherMessage = document.createElement('div');
     otherMessage.className = isBot ? 'message bot' : 'message other';
-    otherMessage.textContent = message;
+    otherMessage.innerHTML = convertTextToEmoji(message);
 
     otherMessageContainer.appendChild(sender);
     otherMessageContainer.appendChild(otherMessage);
@@ -136,4 +136,87 @@ function hideUnreadIcon() {
     var icon = document.getElementById('unread-icon');
     icon.style.display = 'none';
     unreadCount = 0;
+}
+
+function convertTextToEmoji(inputText) {
+    const emojiMap = {
+        // Smiling Faces
+        ':)': '😊',
+        ':-)': '😊',
+        ':D': '😄',
+        ':-D': '😄',
+        ':(': '☹️',
+        ':-(': '☹️',
+        ':P': '😜',
+        ':-P': '😜',
+        ';)': '😉',
+        ';-)': '😉',
+        ":'(": '😢',
+        ":'-(": '😢',
+        ':o': '😮',
+        ':-o': '😮',
+        ':O': '😲',
+        ':-O': '😲',
+        ':/': '😕',
+        ':-/': '😕',
+        '>:)': '😈',
+        '>:-)': '😈',
+        '>:/': '😒',
+        '>:-/': '😒',
+        '>:((': '😡',
+        'XD': '😆',
+        '<3': '❤️',
+        '</3': '💔',
+
+        // Gestures
+        ':thumbsup:': '👍',
+        ':thumbsdown:': '👎',
+        ':clap:': '👏',
+        ':wave:': '👋',
+        ':ok:': '👌',
+        ':peace:': '✌️',
+
+        // Animals
+        ':cat:': '🐱',
+        ':dog:': '🐶',
+        ':fox:': '🦊',
+        ':panda:': '🐼',
+        ':lion:': '🦁',
+        ':unicorn:': '🦄',
+
+        // Objects
+        ':car:': '🚗',
+        ':airplane:': '✈️',
+        ':house:': '🏠',
+        ':phone:': '📱',
+        ':laptop:': '💻',
+        ':gift:': '🎁',
+
+        // Food
+        ':pizza:': '🍕',
+        ':burger:': '🍔',
+        ':cake:': '🎂',
+        ':apple:': '🍎',
+        ':banana:': '🍌',
+
+        // Weather
+        ':sun:': '☀️',
+        ':cloud:': '☁️',
+        ':rain:': '🌧️',
+        ':snow:': '❄️',
+
+        // Miscellaneous
+        ':star:': '⭐',
+        ':heart:': '❤️',
+        ':fire:': '🔥',
+        ':check:': '✅',
+        ':cross:': '❌'
+    };
+
+    // Replace all occurrences of text-based emoji with their equivalents
+    const outputText = inputText.replace(/:\)|:-\)|:D|:-D|:\(|:-\(|:P|:-P|;\)|;\-\)|:\'\(|:\'-\(|:o|:-o|:O|:-O|:\/|:-\/|>:\)|>:\-\)|>:\/|>:\-\/|>:\(\(|XD|<3|<\/3|:thumbsup:|:thumbsdown:|:clap:|:wave:|:ok:|:peace:|:cat:|:dog:|:fox:|:panda:|:lion:|:unicorn:|:car:|:airplane:|:house:|:phone:|:laptop:|:gift:|:pizza:|:burger:|:cake:|:apple:|:banana:|:sun:|:cloud:|:rain:|:snow:|:star:|:heart:|:fire:|:check:|:cross:/g, (match) => {
+        return emojiMap[match] || match;
+    });
+
+    return outputText;
 }

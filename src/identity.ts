@@ -4,6 +4,10 @@ export const IDENTITY = [
         ip: '::ffff:192.168.164.212'
     },
     {
+        name: 'Luyện',
+        ip: '::1'
+    },
+    {
         name: 'Tâm',
         ip: '::ffff:192.168.164.174'
     },
@@ -34,5 +38,33 @@ export const IDENTITY = [
     {
         name: 'Hân',
         ip: '::ffff:192.168.164.214'
+    },
+    {
+        name: 'Mem Lầu 1',
+        ip: '::ffff:192.168.164.41'
+    },
+    {
+        name: 'Mem Lầu 1',
+        ip: '::ffff:192.168.164.42'
+    },
+    {
+        name: 'Mem Lầu 1',
+        ip: '::ffff:192.168.164.44'
+    },
+    {
+        name: 'Mem Lầu 1',
+        ip: '::ffff:192.168.164.51'
+    },
+    {
+        name: 'Mem Lầu 1',
+        ip: '::ffff:192.168.164.52'
+    },
+    {
+        name: 'Mem Lầu 1',
+        ip: '::ffff:192.168.164.53'
+    },
+    {
+        name: 'Mem Lầu 1',
+        ip: '::ffff:192.168.164.56'
     },
 ]

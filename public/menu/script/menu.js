@@ -22,8 +22,6 @@ function showMenu(data) {
 
             const menuItem = document.createElement('div');
 
-            // item.available = Math.random() > 0.5;
-
             menuItem.className = 'menu-item';
             menuItem.style.opacity = item.available ? 1.0 : 0.6;
 

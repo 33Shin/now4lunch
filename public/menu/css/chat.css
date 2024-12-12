@@ -15,8 +15,8 @@
     right: 20px;
     width: 300px;
     max-height: 400px;
-    background-color: white;
-    border: 1px solid #ddd;
+    background-color: #eee;
+    border: 2px solid #fff;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: none;
@@ -50,8 +50,6 @@
 /* User messages */
 .chat-popup .messages .message-container.user {
     align-items: flex-end;
-    font-size: 14px;
-    font-weight: bold;
 }
 
 .chat-popup .messages .message-container.user .sender-name {
@@ -88,11 +86,11 @@
 }
 
 .chat-popup .messages .message.other {
-    background-color: #5d5d5d;
+    background-color: #ffffff;
     padding: 8px;
     border-radius: 10px;
     max-width: 80%;
-    color: #ffffff;
+    color: #4c4c4c;
 }
 
 /* Input Area */

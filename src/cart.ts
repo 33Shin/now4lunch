@@ -74,25 +74,24 @@ class Cart
 
     reset()
     {
-        fs.rmSync('log', { force: true, recursive: true });
         this.cart.clear();
     }
 
     private log()
     {
         fs.mkdirSync('log', { recursive: true });
-        fs.writeFileSync('log/log.txt', JSON.stringify(Array.from(this.cart)));
+        fs.writeFileSync('log/cart.dat', JSON.stringify(Array.from(this.cart)));
 
         var date = new Date();
         this.currentTime = date.toISOString().split('T')[0] + '_' + date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds();
-        fs.writeFileSync('log/backup.' + this.currentTime, JSON.stringify(Array.from(this.cart)));
+        fs.writeFileSync('log/cart_backup.' + this.currentTime, JSON.stringify(Array.from(this.cart)));
     }
 
     private loadLog()
     {
-        if (fs.existsSync('log/log.txt'))
+        if (fs.existsSync('log/cart.dat'))
         {
-            var logContent = fs.readFileSync('log/log.txt', 'utf-8');
+            var logContent = fs.readFileSync('log/cart.dat', 'utf-8');
             var log = JSON.parse(logContent);
             this.cart.clear();
             for (let index = 0; index < log.length; index++)

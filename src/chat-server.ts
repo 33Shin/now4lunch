@@ -14,6 +14,15 @@ export function initChatServer(app: any)
     app.ws('/ws', (socket: any, req: any) =>
     {
         var ip = req.socket.remoteAddress;
+        var identity = IDENTITY.find(i => i.ip == ip);
+        if (identity == null)
+        {
+            console.log("New connection from: " + ip);
+        }
+        else
+        {
+            console.log(identity.name + " is connected");
+        }
         list_connection.push({
             socket: socket,
             ip: ip

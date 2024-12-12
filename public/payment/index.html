@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #efefef;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .data-list {
+            width: 90%;
+            max-width: 600px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ffcce0;
+        }
+
+        .data-item-highlight {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ffcce0;
+            background-color: #fbeaf1;
+            font-weight: bold;
+        }
+
+        .data-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-item .name {
+            color: #222;
+        }
+
+        .data-item .price {
+            color: #555;
+        }
+
+        .header {
+            padding: 15px 20px;
+            background-color: #d82d8b;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .zoom-image {
+            max-width: 100%;
+            height: auto;
+            cursor: pointer;
+        }
+        .zoomed {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            max-width: 90%;
+            max-height: 90%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9998;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="data-list"></div>
+    <img src="./momo.jpg" alt="momo" id="momo" onclick="zoomMomo()" width="350" height="411" style="padding: 20px; cursor: pointer;">
+    <div id="overlay" class="overlay" style="display:none;"></div>
+    <script>
+        var dataList = document.getElementsByClassName('data-list')[0];
+
+        fetch('/get_payment').then(response => {
+            response.json().then(data => {
+                console.log(data);
+                onData(data);
+            });
+        });
+
+        function onData(list_payment) {
+            dataList.innerHTML = `<div class="header">Tiền Cơm Trưa</div>`;
+            list_payment.forEach(payment => {
+                var className = payment.owned ? 'data-item-highlight' : 'data-item';
+                dataList.innerHTML += `
+                 <div class="${className}">
+                    <span class="name">${payment.name}</span>
+                    <span class="price">${Math.ceil(payment.price / 1000) + 'k'}</span>
+                </div>
+                `;
+            });
+        }
+
+        const zoomImage = document.getElementById('momo');
+        const overlay = document.getElementById('overlay');
+
+        function zoomMomo() {
+            // Create a clone of the image for zooming
+            const zoomedImage = document.createElement('img');
+            zoomedImage.src = './momo.jpg';
+            zoomedImage.classList.add('zoomed');
+            document.body.appendChild(zoomedImage);
+            overlay.style.display = 'block';
+            delete zoomImage.style.width;
+            delete zoomImage.style.height;
+
+            // Close zoom on overlay click
+            overlay.onclick = function () {
+                zoomedImage.remove();
+                overlay.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+
+</html>

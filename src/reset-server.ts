@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { UserCard } from "./cart";
 import { resetChat } from "./chat-server";
 import { resetShopDetail } from "./shopee";
@@ -19,6 +20,7 @@ function validateRequest(username: string, password: string)
 
 function resetAllValue()
 {
+    fs.rmSync('log', { force: true, recursive: true });
     UserCard.reset();
     resetShopDetail();
     resetChat();

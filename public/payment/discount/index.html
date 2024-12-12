@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .data-list {
+            width: 90%;
+            max-width: 600px;
+            background-color: #333;
+            box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #666;
+        }
+
+        .data-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-item .name {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .data-item input {
+            padding: 5px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 80px;
+            background-color: #555;
+            color: #fff;
+        }
+
+        .header {
+            padding: 15px 20px;
+            background-color: #222;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .confirm-button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #444;
+            color: #fff;
+            border: 1px solid #666;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .confirm-button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="data-list">
+        <div class="header">Shop Discount</div>
+        <div class="data-item">
+            <span class="name">Item 1</span>
+            <input type="number" placeholder="Enter number">
+        </div>
+        <div class="data-item">
+            <span class="name">Item 2</span>
+            <input type="number" placeholder="Enter number">
+        </div>
+        <div class="data-item">
+            <span class="name">Item 3</span>
+            <input type="number" placeholder="Enter number">
+        </div>
+    </div>
+    
+
+    <script>
+        fetch('get_cart').then(res => res.json().then(data => onData(data)));
+
+        function onData(data) {
+            var list_shop = [];
+
+            data.forEach(cartData => cartData.cart.forEach(food => {
+                if (list_shop.includes(food.seller) == false) {
+                    list_shop.push(food.seller);
+                }
+            }));
+
+            var dataList = document.getElementsByClassName('data-list')[0];
+            dataList.innerHTML = `<div class="header">Shop Discount</div>`;
+            list_shop.forEach(shopName => {
+                dataList.innerHTML += `
+                <div class="data-item">
+                    <span class="name">${shopName}</span>
+                    <input type="number" placeholder="Enter discount" value=0>
+                </div>
+                `;
+            });
+            dataList.innerHTML += `<button class="confirm-button" onclick="confirmDiscount()">Confirm</button>`;
+        }
+
+        function confirmDiscount() {
+            const items = document.querySelectorAll('.data-item');
+            const data = [];
+
+            items.forEach(item => {
+                const name = item.querySelector('.name').textContent;
+                const value = item.querySelector('input').value;
+                data.push({ seller: name, discount: value });
+            });
+
+            fetch('/set_discount', {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+                body: JSON.stringify(data),
+            }).then(() => alert("DONE!"));
+        }
+    </script>
+</body>
+
+</html>
