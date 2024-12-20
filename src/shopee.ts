@@ -1,8 +1,12 @@
 import fs from 'fs';
 import { getDetail, getFromUrl, getMenu } from "./api";
 
-var shop_json = fs.readFileSync(process.cwd() + '/database/shop.dat', 'utf-8');
-var LIST_SHOP_URL: string[] = JSON.parse(shop_json);
+var LIST_SHOP_URL: string[] = [];
+if (fs.existsSync('database/shop.dat'))
+{
+    var shop_json = fs.readFileSync('database/shop.dat', 'utf-8');
+    LIST_SHOP_URL = JSON.parse(shop_json)
+}
 
 var SHOP_DATA: any[] = [];
 
