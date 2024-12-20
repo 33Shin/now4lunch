@@ -1,70 +1,34 @@
-export const IDENTITY = [
-    {
-        name: 'Luyện',
-        ip: '::ffff:192.168.164.212'
-    },
-    {
-        name: 'Luyện',
-        ip: '::1'
-    },
-    {
-        name: 'Tâm',
-        ip: '::ffff:192.168.164.174'
-    },
-    {
-        name: 'Nam',
-        ip: '::ffff:192.168.164.213'
-    },
-    {
-        name: 'Phương Thảo',
-        ip: '::ffff:192.168.164.219'
-    },
-    {
-        name: 'Thanh',
-        ip: '::ffff:192.168.164.215'
-    },
-    {
-        name: 'Linh',
-        ip: '::ffff:192.168.164.211'
-    },
-    {
-        name: 'Hoàng',
-        ip: '::ffff:192.168.164.217'
-    },
-    {
-        name: 'Kiên',
-        ip: '::ffff:192.168.164.171'
-    },
-    {
-        name: 'Hân',
-        ip: '::ffff:192.168.164.214'
-    },
-    {
-        name: 'Mem Lầu 1',
-        ip: '::ffff:192.168.164.41'
-    },
-    {
-        name: 'Mem Lầu 1',
-        ip: '::ffff:192.168.164.42'
-    },
-    {
-        name: 'Mem Lầu 1',
-        ip: '::ffff:192.168.164.44'
-    },
-    {
-        name: 'Mem Lầu 1',
-        ip: '::ffff:192.168.164.51'
-    },
-    {
-        name: 'Mem Lầu 1',
-        ip: '::ffff:192.168.164.52'
-    },
-    {
-        name: 'Mem Lầu 1',
-        ip: '::ffff:192.168.164.53'
-    },
-    {
-        name: 'Mem Lầu 1',
-        ip: '::ffff:192.168.164.56'
-    },
-]
+import fs from "fs";
+
+interface Identity 
+{
+    ip: string,
+    name: string,
+}
+
+export const IDENTITY: Identity[] = JSON.parse(fs.readFileSync('database/identity.dat', 'utf-8'));
+
+export function addIdentity(ip: string, name: string)
+{
+    IDENTITY.push({
+        ip: ip,
+        name: name
+    });
+}
+
+export function backupIdentity()
+{
+    fs.writeFileSync('database/identity.dat', JSON.stringify(IDENTITY));
+}
+
+export function setIdentity(data: any)
+{
+    IDENTITY.length = 0;
+    data.forEach((i: any) => {
+        IDENTITY.push({
+            name: i.name,
+            ip: i.ip
+        });
+    });
+    backupIdentity();
+}

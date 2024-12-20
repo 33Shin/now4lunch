@@ -57,11 +57,21 @@
                 1px -1px 2px white,
                 -1px 1px 2px white;
         }
+
+        #snow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 1000;
+        }
     </style>
 </head>
 
 <body>
-
+    <div id="snow"></div>
     <div id="video-background"
         style="display: none; position: fixed; opacity: 0.5; object-fit: cover; width: 100%; height: 100%; overflow: hidden;">
         <video id="video" class="background-video" autoplay loop
@@ -80,12 +90,13 @@
         <br>
         <img src="https://media.tenor.com/UnqSW11KKoUAAAAj/my-fuzzy.gif" style="padding-right: 39px; cursor: pointer;"
             onclick="changeBackground()">
-
+        <p>Sau 1h, vào trang <a href="/payment"><b>"TIỀN CƠM TRƯA"</b></a> để xem giá tiền</p>
+        <p>Nhớ check tiền cơm mỗi ngày nha. Please!!!</p>
     </div>
 
     <script>
-        var count = 0;
-        document.body.style.backgroundImage = "url('https://sushiworld.com.vn/wp-content/uploads/2020/10/background.jpg')";
+        var count = -1;
+        changeBackground();
         function changeBackground() {
             switch (count) {
                 case 0:
@@ -126,13 +137,11 @@
                 case 11:
                     playVideo('video4');
                     break;
-                case 12:
+                default:
                     stopVideo();
                     document.body.style.backgroundColor = '#ffffff';
                     document.body.style.backgroundImage = "url('https://sushiworld.com.vn/wp-content/uploads/2020/10/background.jpg')";
                     count = -1;
-                    break;
-                default:
                     break;
             }
             count++;
@@ -154,6 +163,72 @@
             videoSrc.pause();
             videoSrc.currentTime = 0;
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js';
+            script.onload = function () {
+                particlesJS("snow", {
+                    "particles": {
+                        "number": {
+                            "value": 200,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#ffffff"
+                        },
+                        "opacity": {
+                            "value": 0.7,
+                            "random": false,
+                            "anim": {
+                                "enable": false
+                            }
+                        },
+                        "size": {
+                            "value": 5,
+                            "random": true,
+                            "anim": {
+                                "enable": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": false
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 5,
+                            "direction": "bottom",
+                            "random": true,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": true,
+                                "rotateX": 300,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "events": {
+                            "onhover": {
+                                "enable": false
+                            },
+                            "onclick": {
+                                "enable": false
+                            },
+                            "resize": false
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+            //document.head.append(script);
+        });
     </script>
 </body>
 

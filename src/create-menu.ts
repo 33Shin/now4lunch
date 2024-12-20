@@ -3,6 +3,10 @@ import { Menu } from "./menu.i";
 export function createMenu(data: any)
 {
     var list_menu: Menu[] = [];
+    if (data.reply == null)
+    {
+        return [];
+    }
     for (let index = 0; index < data.reply.menu_infos.length; index++)
     {
         const menu = data.reply.menu_infos[index];

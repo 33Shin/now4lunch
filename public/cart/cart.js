@@ -40,7 +40,7 @@ function viewCart(cart_data) {
     noteCell.textContent = list_food[0].note || '';
 
     var deleteCell = newRow.insertCell(5);
-    if (list_food[0].owned) {
+    if (list_food[0].owned && !timeOut()) {
         var deleteButton = document.createElement('button');
         deleteButton.innerText = 'x';
         deleteButton.onclick = () => removeItem(user, 0, list_food[0].auth);
@@ -107,4 +107,14 @@ function refreshCart() {
     table.innerHTML = '';
 
     requestCart();
+}
+
+function timeOut() {
+    var time = new Date();
+    var hour = time.getHours();
+    var minute = time.getMinutes();
+    if (hour >= 11 && minute > 10) {
+        return true;
+    }
+    return false;
 }

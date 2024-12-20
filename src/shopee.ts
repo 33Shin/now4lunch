@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { getDetail, getFromUrl } from "./api";
+import { getDetail, getFromUrl, getMenu } from "./api";
 
 var shop_json = fs.readFileSync(process.cwd() + '/database/shop.dat', 'utf-8');
 var LIST_SHOP_URL: string[] = JSON.parse(shop_json);
@@ -28,10 +28,18 @@ export async function getAllShopDetail()
         }
         else
         {
-            var shop_id_response = await getFromUrl(shopUrl);
+            var shop_id_response: any = {};
+            while (!shop_id_response.reply)
+            {
+                shop_id_response = await getFromUrl(shopUrl);
+            }
             id = shop_id_response.reply.delivery_id;
         }
-        var detail_response = await getDetail(id);
+        var detail_response: any = {};
+        while (detail_response.reply == null)
+        {
+            detail_response = await getDetail(id)
+        }
         var detail_data = detail_response.reply.delivery_detail
         if (detail_data.asap_is_available)
         {
@@ -70,6 +78,16 @@ export async function setActiveShop(list_shop_data: any)
     fs.renameSync('database/shop.dat', 'database/shop.dat_' + currentTime);
     fs.writeFileSync('database/shop.dat', JSON.stringify(new_shop_json));
     await getAllShopDetail();
+}
+
+export async function getShopeeMenu(id: string | number)
+{
+    var menu: any = {};
+    while (menu.reply == null)
+    {
+        menu = await getMenu(id);
+    }
+    return menu;
 }
 
 getAllShopDetail();

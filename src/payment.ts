@@ -19,6 +19,7 @@ export function getPayment(ip: string)
             totalPrice *= (1 - discount);
         });
         var owned = list_food[0].owned;
+
         payment.push({
             name: name,
             price: totalPrice,
@@ -39,5 +40,5 @@ function getDiscountValue(seller: string)
             return discountData.discount;
         }
     }
-    return 0;
+    return 1;
 }

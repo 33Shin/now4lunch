@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Placed - Restaurant Theme</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Barlow", sans-serif;
+            background: linear-gradient(to bottom, #ffecd2, #fcb69f);
+            color: #333;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 20px 0;
+            color: #d9534f;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin: 20px 0;
+            color: #5a5a5a;
+        }
+
+        .decor {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: url('https://cdn-icons-png.flaticon.com/512/1046/1046784.png') no-repeat center center / cover;
+            animation: spin 10s linear infinite;
+        }
+
+        .decor:nth-child(1) {
+            top: 20%;
+            left: 10%;
+        }
+
+        .decor:nth-child(2) {
+            top: 40%;
+            right: 10%;
+        }
+
+        .decor:nth-child(3) {
+            bottom: 20%;
+            left: 25%;
+        }
+
+        .decor:nth-child(4) {
+            bottom: 30%;
+            right: 25%;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ĐƠN HÀNG ĐÃ CHỐT</h1>
+        <p>Nếu muốn đặt món mới hoặc đổi món, vui lòng liên hệ chủ xị.</p>
+    </div>
+
+    <div class="decor"></div>
+    <div class="decor"></div>
+    <div class="decor"></div>
+    <div class="decor"></div>
+</body>
+</html>

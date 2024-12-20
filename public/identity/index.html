@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discount</title>
+    <title>User Identity</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -84,24 +84,17 @@
 <body>
     <div class="data-list"></div>
     <script>
-        fetch('get_cart').then(res => res.json().then(data => onData(data)));
+        fetch('get_identity').then(res => res.json().then(data => onData(data)));
 
         function onData(data) {
-            var list_shop = [];
-
-            data.forEach(cartData => cartData.cart.forEach(food => {
-                if (list_shop.includes(food.seller) == false) {
-                    list_shop.push(food.seller);
-                }
-            }));
 
             var dataList = document.getElementsByClassName('data-list')[0];
-            dataList.innerHTML = `<div class="header">Shop Discount</div>`;
-            list_shop.forEach(shopName => {
+            dataList.innerHTML = `<div class="header">Username</div>`;
+            data.forEach(identity => {
                 dataList.innerHTML += `
                 <div class="data-item">
-                    <span class="name">${shopName}</span>
-                    <input type="number" placeholder="Enter discount" value=1>
+                    <span class="ip">${identity.ip}</span>
+                    <input type="string" placeholder="Enter name" value="${identity.name}">
                 </div>
                 `;
             });
@@ -113,12 +106,12 @@
             const data = [];
 
             items.forEach(item => {
-                const name = item.querySelector('.name').textContent;
-                const value = item.querySelector('input').value;
-                data.push({ seller: name, discount: value });
+                const ip = item.querySelector('.ip').textContent;
+                const name = item.querySelector('input').value;
+                data.push({ ip: ip, name: name });
             });
 
-            fetch('/set_discount', {
+            fetch('/set_identity', {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",

@@ -82,7 +82,8 @@ function updateNote(event, index) {
 }
 
 async function submit() {
-    var username = '';
+    var res = await fetch('get_name');
+    var username = await res.text();
     while (username == '') {
         username = prompt("Tên người đặt: ");
         if (username == null) {

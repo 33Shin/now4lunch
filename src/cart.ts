@@ -1,6 +1,7 @@
 import CryptoJS from 'crypto-js';
 import fs from 'fs';
 import { chat, notify } from './chat-server';
+import { addIdentity, backupIdentity, IDENTITY } from './identity';
 
 const KEY = "WeAreToys!";
 
@@ -11,13 +12,24 @@ class Cart
 
     add(cartData: any, ip: string)
     {
-        console.log(cartData, ip);
         notify(cartData, ip);
         this.sendToChat(cartData);
 
         var encrypt_ip = this.encryptIP(ip);
-
         var name = cartData.username;
+
+        var identity = IDENTITY.find(i => i.ip == encrypt_ip);
+        if (identity == null)
+        {
+            addIdentity(encrypt_ip, name);
+            backupIdentity();
+        }
+        else if (identity.name == "Mem Lầu G")
+        {
+            identity.name = name;
+            backupIdentity();
+        }
+
         cartData.cart.forEach((cart: any) =>
         {
             cart.auth = encrypt_ip;
@@ -51,7 +63,7 @@ class Cart
             }
 
         }
-        chat(`${cartData.username} đã đặt món tại ${list_seller.join(', ')}`);
+        chat(`<i>${cartData.username}</i> đã đặt món tại <b>${list_seller.join(', ')}</b>`);
     }
 
     remove(cartData: any, ip: string)
@@ -122,7 +134,7 @@ class Cart
                     seller: i.seller,
                     image: i.image,
                     topping: i.list_topping,
-                    owned: i.auth == encrypt_ip,
+                    owned: i.auth == encrypt_ip || encrypt_ip == '::1',
                     note: i.note
                 }
             });
@@ -131,6 +143,7 @@ class Cart
                 cart: cart_data
             });
         });
+        list_cart.sort((a: any, b: any) => { return a.cart[0].seller.localeCompare(b.cart[0].seller) })
         return list_cart;
     }
 

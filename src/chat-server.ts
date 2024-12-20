@@ -46,6 +46,14 @@ export function initChatServer(app: any)
         {
             var socketIndex = list_connection.indexOf(socket);
             list_connection.splice(socketIndex, 1);
+            if (identity == null)
+            {
+                console.log("New connection is lost: " + ip);
+            }
+            else
+            {
+                console.log(identity.name + " closed the connection");
+            }
         })
     });
 }

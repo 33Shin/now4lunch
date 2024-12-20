@@ -1,18 +1,30 @@
 import { Request, Response } from "express-serve-static-core";
 import { ParsedQs } from "qs";
-import { getMenu } from "./api";
 import { UserCard } from "./cart";
 import { createMenu } from "./create-menu";
 import { setDiscount } from "./discount";
 import { getBackupLog, getBackupLogData, getBackupShop, getBackupShopData } from "./get-backup-file";
+import { IDENTITY, setIdentity } from "./identity";
 import { getPayment } from "./payment";
 import { resetServer } from "./reset-server";
-import { getAllShopDetail, getShopURL, setActiveShop } from "./shopee";
+import { getAllShopDetail, getShopeeMenu, getShopURL, setActiveShop } from "./shopee";
 
 export class LocalServer
 {
     onRequest(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>)
     {
+        if (req.url.includes('get_name'))
+        {
+            var identity = IDENTITY.find(i => i.ip == req.ip);
+            if (identity == null || identity.name == 'Mem Lầu G')
+            {
+                res.send('');
+            }
+            else
+            {
+                res.send(identity.name);
+            }
+        }
         if (req.url.includes('get_seller'))
         {
             getAllShopDetail().then(shopData =>
@@ -23,7 +35,7 @@ export class LocalServer
         if (req.url.includes('get_menu'))
         {
             var seller_id = Number.parseInt(this.getQueryString(req.url, 'seller_id'));
-            getMenu(seller_id).then((food_data) =>
+            getShopeeMenu(seller_id).then((food_data) =>
             {
                 var food = createMenu(food_data);
                 res.send(JSON.stringify(food));
@@ -91,6 +103,10 @@ export class LocalServer
             var payment = getPayment(req.ip || '');
             res.send(JSON.stringify(payment));
         }
+        if (req.url.includes('get_identity'))
+        {
+            res.send(JSON.stringify(IDENTITY));
+        }
     }
 
     onConfirm(req: Request<{}, any, any, ParsedQs, Record<string, any>>, res: Response<any, Record<string, any>, number>)
@@ -122,6 +138,11 @@ export class LocalServer
         if (req.url.includes('set_discount'))
         {
             setDiscount(req.body);
+            res.send(JSON.stringify({ result: 'success' }));
+        }
+        if (req.url.includes('set_identity'))
+        {
+            setIdentity(req.body);
             res.send(JSON.stringify({ result: 'success' }));
         }
     }

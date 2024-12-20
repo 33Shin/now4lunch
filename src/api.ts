@@ -19,7 +19,7 @@ const HEADER: any = {
     "x-foody-api-version": 1,
     "x-foody-client-language": "vi",
     "x-foody-access-token": "",
-    "x-sap-ri": "ead84e678ee4c001e02ba733f19bee8bc830752fb4223537"
+    "x-sap-ri": "9acf6367cadb0408a1f97730ea86d47c89d1899abd38b780",
 }
 
 export async function login()
@@ -43,7 +43,8 @@ export async function login()
 
 export async function getMenu(id: number | string)
 {
-    var res = await fetch('https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=' + id, {
+    var url = 'https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=' + id;
+    var res = await fetch(url, {
         method: 'GET',
         headers: HEADER
     });
@@ -53,7 +54,7 @@ export async function getMenu(id: number | string)
 
 export async function getFromUrl(shopeeUrl: string)
 {
-    var url = 'https://gappapi.deliverynow.vn/api/delivery/get_from_url?url=' + shopeeUrl.split('shopeefood.vn/').slice(-1);
+    var url = 'https://gappapi.deliverynow.vn/api/delivery/get_from_url?url=' + shopeeUrl.split('shopeefood.vn/').slice(-1)[0];
     var res = await fetch(url, {
         method: 'GET',
         headers: HEADER
