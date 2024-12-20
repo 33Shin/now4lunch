@@ -6,7 +6,11 @@ interface Identity
     name: string,
 }
 
-export const IDENTITY: Identity[] = JSON.parse(fs.readFileSync('database/identity.dat', 'utf-8'));
+export var IDENTITY: Identity[] = [];
+if (fs.existsSync('database/identity.dat'))
+{
+    IDENTITY = JSON.parse(fs.readFileSync('database/identity.dat', 'utf-8'));
+}
 
 export function addIdentity(ip: string, name: string)
 {
