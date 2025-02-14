@@ -2,12 +2,12 @@ import { Request, Response } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 import { UserCard } from "./cart";
 import { createMenu } from "./create-menu";
-import { setDiscount } from "./discount";
 import { getBackupLog, getBackupLogData, getBackupShop, getBackupShopData } from "./get-backup-file";
 import { IDENTITY, setIdentity } from "./identity";
+import { getLocalMenu, getShopDetail, setActiveShop } from "./non-api";
 import { getPayment } from "./payment";
 import { resetServer } from "./reset-server";
-import { getAllShopDetail, getShopeeMenu, getShopURL, setActiveShop } from "./shopee";
+import { setShopPrice } from "./shop-price";
 
 export class LocalServer
 {
@@ -16,7 +16,7 @@ export class LocalServer
         if (req.url.includes('get_name'))
         {
             var identity = IDENTITY.find(i => i.ip == req.ip);
-            if (identity == null || identity.name == 'Mem Lầu G')
+            if (identity == null)
             {
                 res.send('');
             }
@@ -27,7 +27,7 @@ export class LocalServer
         }
         if (req.url.includes('get_seller'))
         {
-            getAllShopDetail().then(shopData =>
+            getShopDetail().then(shopData =>
             {
                 res.send(JSON.stringify(shopData));
             });
@@ -35,7 +35,7 @@ export class LocalServer
         if (req.url.includes('get_menu'))
         {
             var seller_id = Number.parseInt(this.getQueryString(req.url, 'seller_id'));
-            getShopeeMenu(seller_id).then((food_data) =>
+            getLocalMenu(seller_id).then((food_data) =>
             {
                 var food = createMenu(food_data);
                 res.send(JSON.stringify(food));
@@ -43,7 +43,12 @@ export class LocalServer
         }
         if (req.url.includes('get_cart'))
         {
-            var cart = UserCard.getCart(req.ip || '');
+            var date: any = null;
+            if (req.url.includes('date'))
+            {
+                date = req.url.split('date=')[1].split('&')[0];
+            }
+            var cart = UserCard.getCart(req.ip || '', date);
 
             var resData = JSON.stringify(cart);
             res.send(resData);
@@ -71,8 +76,10 @@ export class LocalServer
         }
         if (req.url.includes('get_shop'))
         {
-            var list_shop = getShopURL();
-            res.send(JSON.stringify(list_shop));
+            getShopDetail().then(shopData =>
+            {
+                res.send(JSON.stringify(shopData));
+            });
         }
         if (req.url.includes('database'))
         {
@@ -100,7 +107,12 @@ export class LocalServer
         }
         if (req.url.includes('get_payment'))
         {
-            var payment = getPayment(req.ip || '');
+            var date: any = null;
+            if (req.url.includes('date='))
+            {
+                date = req.url.split('date=')[1].split('&')[0];
+            }
+            var payment = getPayment(req.ip || '', date);
             res.send(JSON.stringify(payment));
         }
         if (req.url.includes('get_identity'))
@@ -135,9 +147,9 @@ export class LocalServer
                 res.send(JSON.stringify({ result: 'success' }));
             });
         }
-        if (req.url.includes('set_discount'))
+        if (req.url.includes('set_price'))
         {
-            setDiscount(req.body);
+            setShopPrice(req.body);
             res.send(JSON.stringify({ result: 'success' }));
         }
         if (req.url.includes('set_identity'))

@@ -3,13 +3,161 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Winter Snow Background</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Fantasy Game Classes</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJFu3THnW9Wh3O4k4DQOmnZs2y5t1rFYfK1d8olHp1o6A0tI2nH5G6qLhp7r" crossorigin="anonymous">
+  
+  <!-- Material UI (via CDN) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://cdn.jsdelivr.net/npm/@mui/material@5.1.0/dist/material-ui.min.css" rel="stylesheet" />
+
+  <!-- Custom Styles (Optional) -->
+  <style>
+    .class-card {
+      margin-bottom: 20px;
+    }
+    .card-header {
+      background-color: #1976d2;
+      color: white;
+      font-weight: bold;
+    }
+    .class-list {
+      margin-top: 40px;
+    }
+  </style>
 </head>
 <body>
-  <div class="snow-container">
-    <h1 class="title">Winter Wonderland</h1>
+  <div class="container class-list">
+    <h1 class="text-center my-4">Fantasy Game Classes</h1>
+    
+    <div class="row">
+      <!-- Warrior / Fighter -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card class-card">
+          <div class="card-header">Warrior / Fighter</div>
+          <div class="card-body">
+            <p><strong>Primary Stats:</strong> Strength, Endurance</p>
+            <p><strong>Abilities:</strong> Physical combat, Weapon expertise, High defense</p>
+            <p><strong>Role:</strong> Tank / Damage Dealer</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mage / Wizard -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card class-card">
+          <div class="card-header">Mage / Wizard</div>
+          <div class="card-body">
+            <p><strong>Primary Stats:</strong> Intelligence, Mana</p>
+            <p><strong>Abilities:</strong> Spells, Arcane magic, High damage potential</p>
+            <p><strong>Role:</strong> Damage Dealer (Ranged)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cleric / Priest -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card class-card">
+          <div class="card-header">Cleric / Priest</div>
+          <div class="card-body">
+            <p><strong>Primary Stats:</strong> Wisdom, Mana</p>
+            <p><strong>Abilities:</strong> Healing, Buffs, Divine spells</p>
+            <p><strong>Role:</strong> Healer / Support</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rogue / Thief -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card class-card">
+          <div class="card-header">Rogue / Thief</div>
+          <div class="card-body">
+            <p><strong>Primary Stats:</strong> Agility, Dexterity</p>
+            <p><strong>Abilities:</strong> Stealth, Backstabbing, Trap disarming</p>
+            <p><strong>Role:</strong> Damage Dealer (Stealth)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ranger -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card class-card">
+          <div class="card-header">Ranger</div>
+          <div class="card-body">
+            <p><strong>Primary Stats:</strong> Dexterity, Endurance</p>
+            <p><strong>Abilities:</strong> Archery, Beast summoning, Nature magic</p>
+            <p><strong>Role:</strong> Ranged DPS / Utility</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Paladin -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card class-card">
+          <div class="card-header">Paladin</div>
+          <div class="card-body">
+            <p><strong>Primary Stats:</strong> Strength, Wisdom</p>
+            <p><strong>Abilities:</strong> Healing, Damage mitigation, Holy magic</p>
+            <p><strong>Role:</strong> Tank / Support</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barbarian -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card class-card">
+          <div class="card-header">Barbarian</div>
+          <div class="card-body">
+            <p><strong>Primary Stats:</strong> Strength, Endurance</p>
+            <p><strong>Abilities:</strong> Rage, High physical damage, Tanking</p>
+            <p><strong>Role:</strong> Tank / DPS</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bard -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card class-card">
+          <div class="card-header">Bard</div>
+          <div class="card-body">
+            <p><strong>Primary Stats:</strong> Charisma, Intelligence</p>
+            <p><strong>Abilities:</strong> Music magic, Buffs, Debuffs</p>
+            <p><strong>Role:</strong> Support / Crowd Control</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Druid -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card class-card">
+          <div class="card-header">Druid</div>
+          <div class="card-body">
+            <p><strong>Primary Stats:</strong> Wisdom, Intelligence</p>
+            <p><strong>Abilities:</strong> Shape-shifting, Nature magic, Healing</p>
+            <p><strong>Role:</strong> Healer / Hybrid DPS</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Necromancer -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card class-card">
+          <div class="card-header">Necromancer</div>
+          <div class="card-body">
+            <p><strong>Primary Stats:</strong> Intelligence, Mana</p>
+            <p><strong>Abilities:</strong> Summon undead, Death magic, Curse spells</p>
+            <p><strong>Role:</strong> DPS / Utility</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- More classes go here... -->
+
+    </div>
   </div>
-  <script src="script.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-oP6CRn56UQEdj4DD7aIvAt52yrvnCekVh1HR5gmlmFNY7nxSRN0MfbTdaLfFJY0j" crossorigin="anonymous"></script>
 </body>
 </html>

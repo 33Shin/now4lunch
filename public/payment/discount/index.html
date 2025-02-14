@@ -82,7 +82,8 @@
 </head>
 
 <body>
-    <div class="data-list"></div>
+    <div class="data-list" style="margin: 20px;"></div>
+    <iframe src="../" frameborder="0" width="50%" height="80%" id="payment_page"></iframe>
     <script>
         fetch('get_cart').then(res => res.json().then(data => onData(data)));
 
@@ -96,12 +97,12 @@
             }));
 
             var dataList = document.getElementsByClassName('data-list')[0];
-            dataList.innerHTML = `<div class="header">Shop Discount</div>`;
+            dataList.innerHTML = `<div class="header">Shop Price</div>`;
             list_shop.forEach(shopName => {
                 dataList.innerHTML += `
                 <div class="data-item">
                     <span class="name">${shopName}</span>
-                    <input type="number" placeholder="Enter discount" value=1>
+                    <input type="number" placeholder="Enter price" value=1>
                 </div>
                 `;
             });
@@ -115,16 +116,18 @@
             items.forEach(item => {
                 const name = item.querySelector('.name').textContent;
                 const value = item.querySelector('input').value;
-                data.push({ seller: name, discount: value });
+                data.push({ seller: name, price: value });
             });
 
-            fetch('/set_discount', {
+            fetch('/set_price', {
                 method: 'POST',
                 headers: {
                     "Content-type": "application/json; charset=UTF-8",
                 },
                 body: JSON.stringify(data),
-            }).then(() => alert("DONE!"));
+            }).then(() => {
+                document.getElementById('payment_page').src = '../';
+            });
         }
     </script>
 </body>

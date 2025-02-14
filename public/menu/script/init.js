@@ -26,7 +26,7 @@ function timeOut() {
     var time = new Date();
     var hour = time.getHours();
     var minute = time.getMinutes();
-    if (hour >= 11 && minute > 10 && !window.location.href.includes('admin')) {
+    if (hour >= 11 && minute > 5 && !window.location.href.includes('localhost')) {
         return true;
     }
     return false;

@@ -10,15 +10,17 @@
 
 <body>
     <div class="container">
-        <h2>SHOPEE URL LIST</h2>
+        <h2>SHOPEE</h2>
         <button id="add-url" onclick="addUrl()">Add URL</button>
         <button id="confirm" onclick="confirm()">Confirm</button>
+        <button id="check" onclick="check()">Check</button>
     </div>
     <script>
+        var list_shop = [];
         loadShop();
         async function loadShop() {
             var res = await fetch('/get_shop');
-            var list_shop = await res.json();
+            list_shop = await res.json();
             list_shop.forEach(shop => {
                 addUrl(shop, true);
             });
@@ -28,13 +30,13 @@
             urlItem.remove();
         }
 
-        function addUrl(url, checked) {
+        function addUrl(shop, checked) {
             const container = document.querySelector('.container');
             const newUrlItem = document.createElement('div');
             newUrlItem.classList.add('url-item');
             newUrlItem.innerHTML = `
                 <input type="checkbox" ${checked ? 'checked' : ''}>
-                <input type="text" value="${url || ''}">
+                <input type="text" value="${shop.name || ''}">
                 <button onclick="deleteUrl(this)">Delete</button>
             `;
             container.insertBefore(newUrlItem, document.getElementById('add-url'));
@@ -62,6 +64,13 @@
                 });
             });
             return checkedUrls;
+        }
+
+        function check()
+        {
+            list_shop.forEach((shop, index) => {
+                window.open(shop.url)
+            });
         }
     </script>
 </body>

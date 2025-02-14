@@ -5,7 +5,7 @@ var list_message: any[] = [
     {
         type: 1,
         sender: 'Bot',
-        message: 'Rủ bạn bè đặt chung để được giảm ship nha'
+        message: 'Rủ nhau đặt chung để được giảm giá ship nha!'
     }
 ];
 
@@ -90,7 +90,7 @@ export function resetChat()
         {
             type: 1,
             sender: 'Bot',
-            message: 'Rủ bạn bè đặt chung để được giảm ship nha'
+            message: 'Quán càng đứng top thì giảm giá nhiều nha!'
         }
     ];
 }

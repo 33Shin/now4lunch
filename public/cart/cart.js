@@ -69,7 +69,7 @@ function viewCart(cart_data) {
         noteCell.textContent = food.note || '';
 
         var deleteCell = newRow.insertCell(4);
-        if (list_food[0].owned) {
+        if (list_food[0].owned && !timeOut()) {
             var deleteButton = document.createElement('button');
             deleteButton.innerText = 'x';
             deleteButton.onclick = () => removeItem(user, index, food.auth);
@@ -113,7 +113,7 @@ function timeOut() {
     var time = new Date();
     var hour = time.getHours();
     var minute = time.getMinutes();
-    if (hour >= 11 && minute > 10) {
+    if (hour >= 11 && minute > 5 && !window.location.href.includes('localhost')) {
         return true;
     }
     return false;

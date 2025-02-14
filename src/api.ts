@@ -11,7 +11,7 @@ const CONFIG = {
 };
 
 const HEADER: any = {
-    "Accept": "application/json, text/plain, */*",
+    "Accept": "application/json; charset=utf-8",
     "x-foody-client-id": "",
     "x-foody-client-type": 1,
     "x-foody-app-type": 1004,
@@ -19,7 +19,10 @@ const HEADER: any = {
     "x-foody-api-version": 1,
     "x-foody-client-language": "vi",
     "x-foody-access-token": "",
-    "x-sap-ri": "9acf6367cadb0408a1f97730ea86d47c89d1899abd38b780",
+    "7db3f5c4": "G:6]!>-R`<DT.Mr(=uaI=]0?'",
+    "b095d65c": "Q()!'X.pomG'aEXR8>WknsTek",
+    "x-sap-ri": "c9e868672fa33062c491b8350e84fb3ac7d55e5743fd7f4a",
+    "48245c16": "h;qTGbh8Fm;V@LHBT,6UB?G6-'/WL4EM&X@Z].Nqqo?>O4m!KI\"g3nP%SK,)YgcKq2$?l!`e&*e6^E+#n5sWWilAC=L=+\\4)<7?HPL9n1cDe*3i?\"]2\\&ks1[7(Pcg.GktI_HiQMD_Q)a*dU]r=HeZXmO_\"A:VPJeHL_7.R!d(/j!5NkmG9A%Q7pU<q49+NVju(kmG9A%Q7pU<q49+NVju("
 }
 
 export async function login()
@@ -72,3 +75,5 @@ export async function getDetail(id: number | string)
     var response = await res.json();
     return response;
 }
+
+getMenu(312556).then(res => console.log(res));

@@ -1,14 +1,11 @@
-import CryptoJS from 'crypto-js';
 import fs from 'fs';
 import { chat, notify } from './chat-server';
 import { addIdentity, backupIdentity, IDENTITY } from './identity';
 
-const KEY = "WeAreToys!";
-
 class Cart 
 {
-    private cart: Map<string, any[]> = new Map();
     private currentTime: string = '';
+    private currentDate: string = '';
 
     add(cartData: any, ip: string)
     {
@@ -24,20 +21,16 @@ class Cart
             addIdentity(encrypt_ip, name);
             backupIdentity();
         }
-        else if (identity.name == "Mem Lầu G")
-        {
-            identity.name = name;
-            backupIdentity();
-        }
 
         cartData.cart.forEach((cart: any) =>
         {
             cart.auth = encrypt_ip;
         });
 
-        if (this.cart.has(name))
+        var cart = this.loadLog();
+        if (cart.has(name))
         {
-            var currentMenu = this.cart.get(name) || [];
+            var currentMenu = cart.get(name) || [];
             while (cartData.cart.length > 0)
             {
                 currentMenu.push(cartData.cart.shift())
@@ -45,10 +38,10 @@ class Cart
         }
         else
         {
-            this.cart.set(name, cartData.cart);
+            cart.set(name, cartData.cart);
         }
 
-        this.log();
+        this.log(cart);
     }
 
     private sendToChat(cartData: any)
@@ -68,10 +61,15 @@ class Cart
 
     remove(cartData: any, ip: string)
     {
+        var cart = this.loadLog();
         var encrypt_ip = this.encryptIP(ip);
-        var list_food = this.cart.get(cartData.username);
-        if (list_food == null) return false;
-        if (list_food && list_food[cartData.index].auth != encrypt_ip)
+        var identity = IDENTITY.find(i => i.ip == encrypt_ip);
+        var list_food = cart.get(cartData.username);
+        if (list_food == null || identity == null)
+        {
+            return false
+        }
+        if (list_food && list_food[cartData.index].auth != encrypt_ip && identity.name != 'Admin')
         {
             return false;
         }
@@ -79,52 +77,56 @@ class Cart
         list_food.splice(cartData.index, 1);
         if (list_food.length == 0)
         {
-            this.cart.delete(cartData.username);
+            cart.delete(cartData.username);
         }
+        this.log(cart);
         return true;
     }
 
     reset()
     {
-        this.cart.clear();
     }
 
-    private log()
+    private log(cart: any)
     {
-        fs.mkdirSync('log', { recursive: true });
-        fs.writeFileSync('log/cart.dat', JSON.stringify(Array.from(this.cart)));
-
         var date = new Date();
+        this.currentDate = date.toISOString().split('T')[0];
+
+        fs.mkdirSync(`log/${this.currentDate}/cart/`, { recursive: true });
+        fs.writeFileSync(`log/${this.currentDate}/cart/cart.dat`, JSON.stringify(Array.from(cart)));
+
         this.currentTime = date.toISOString().split('T')[0] + '_' + date.getHours() + '-' + date.getMinutes() + '-' + date.getSeconds();
-        fs.writeFileSync('log/cart_backup.' + this.currentTime, JSON.stringify(Array.from(this.cart)));
+        fs.writeFileSync(`log/${this.currentDate}/cart/cart.` + this.currentTime, JSON.stringify(Array.from(cart)));
     }
 
-    private loadLog()
+    private loadLog(date?: string | undefined)
     {
-        if (fs.existsSync('log/cart.dat'))
+        if (date == null)
         {
-            var logContent = fs.readFileSync('log/cart.dat', 'utf-8');
+            date = new Date().toISOString().split('T')[0]
+        }
+        var cart = new Map();
+        if (fs.existsSync(`log/${date}/cart/cart.dat`))
+        {
+            var logContent = fs.readFileSync(`log/${date}/cart/cart.dat`, 'utf-8');
             var log = JSON.parse(logContent);
-            this.cart.clear();
             for (let index = 0; index < log.length; index++)
             {
                 const cartData = log[index];
-                this.cart.set(cartData[0], cartData[1]);
+                cart.set(cartData[0], cartData[1]);
             }
         }
+        return cart;
     }
 
-    getCart(ip: string)
+    getCart(ip: string, date?: string | undefined)
     {
         var encrypt_ip = this.encryptIP(ip);
         var list_cart: any[] = [];
 
-        if (this.cart.size == 0)
-        {
-            this.loadLog();
-        }
+        var cart = this.loadLog(date);
 
-        this.cart.forEach((value: any[], key: String) =>
+        cart.forEach((value: any[], key: String) =>
         {
             var cart_data = value.map(i =>
             {
@@ -150,12 +152,6 @@ class Cart
     private encryptIP(ip: string)
     {
         return ip;
-
-        var encrypt_ip = CryptoJS.AES.encrypt(ip, CryptoJS.enc.Utf8.parse(KEY), {
-            mode: CryptoJS.mode.ECB,
-            padding: CryptoJS.pad.Pkcs7
-        }).toString();
-        return encrypt_ip;
     }
 }
 

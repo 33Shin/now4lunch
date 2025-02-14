@@ -74,3 +74,15 @@ body {
 #confirm:hover {
     background-color: #b71c1c;
 }
+#check {
+    margin-top: 20px;
+    background-color: #372fd3;
+    color: #ffffff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#check:hover {
+    background-color: #331cb7;
+}
