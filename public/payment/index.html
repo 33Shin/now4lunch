@@ -102,17 +102,20 @@
     <div class="data-container">
         <div class="data-list"></div>
         <div style="display: flex; justify-content: center; align-items: center; margin: 10px;">
-            <button class="btn btn-link" id="btn-prev" onclick="prevDate()"><<</button>
-            <h5 id="label-date" style="margin-top: 0.5rem;">Date</h5>
-            <button class="btn btn-link" id="btn-next" onclick="nextDate()">>></button>
+            <button class="btn btn-link" id="btn-prev" onclick="prevDate()">
+                << </button>
+                    <h5 id="label-date" style="margin-top: 0.5rem;">Date</h5>
+                    <button class="btn btn-link" id="btn-next" onclick="nextDate()"> >> </button>
         </div>
     </div>
-    <img src="./momo.jpg" alt="momo" id="momo" onclick="zoomMomo()" width="350" height="411"
-        style="padding: 20px; cursor: pointer;">
+    <div class="payment-method" style="display: grid; justify-content: center; align-items: center; margin: 10px;">
+        <img src="./momo.jpg" alt="momo" id="momo" onclick="zoomMomo()" width="350" height="411"
+            style="padding: 20px; cursor: pointer;">
+        <button id="paid-button" class="btn btn-danger confirm-button" onclick="confirmPaid()">Đã Momo</button>
+    </div>
+
     <div id="overlay" class="overlay" style="display:none;"></div>
     <script>
-
-
         var dataList = document.getElementsByClassName('data-list')[0];
 
         fetch('/get_payment').then(response => {
@@ -128,11 +131,14 @@
                 var className = payment.owned ? 'data-item-highlight' : 'data-item';
                 dataList.innerHTML += `
                  <div class="${className}">
-                    <span class="name">${payment.name}</span>
+                    <span class="name">${(payment.paid ? "✅ " : "❌ ") + payment.name}</span>
                     <span class="price">${Math.ceil(payment.price / 1000) + 'k'}</span>
                 </div>
                 `;
             });
+
+            var isPaid = list_payment.filter(payment => payment.paid && payment.owned).length == 1;
+            document.getElementById('paid-button').style.display = isPaid ? 'none' : 'block';
         }
 
         const zoomImage = document.getElementById('momo');

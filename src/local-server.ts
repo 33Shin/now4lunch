@@ -5,6 +5,7 @@ import { createMenu } from "./create-menu";
 import { getBackupLog, getBackupLogData, getBackupShop, getBackupShopData } from "./get-backup-file";
 import { IDENTITY, setIdentity } from "./identity";
 import { getLocalMenu, getShopDetail, setActiveShop } from "./non-api";
+import { setPaidData } from "./paid";
 import { getPayment } from "./payment";
 import { resetServer } from "./reset-server";
 import { setShopPrice } from "./shop-price";
@@ -105,7 +106,16 @@ export class LocalServer
                 res.send(JSON.stringify(getBackupLog()));
             }
         }
-        if (req.url.includes('get_payment'))
+        if (req.url.includes('confirm_paid'))
+        {
+            var date: any = null;
+            if (req.url.includes('date='))
+            {
+                date = req.url.split('date=')[1].split('&')[0];
+            }
+            setPaidData(req.ip || '', date);
+        }
+        if (req.url.includes('confirm_paid') || req.url.includes('get_payment'))
         {
             var date: any = null;
             if (req.url.includes('date='))

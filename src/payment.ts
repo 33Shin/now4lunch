@@ -1,9 +1,11 @@
 import { UserCard } from "./cart";
 import { IDENTITY } from "./identity";
+import { getPaidData } from "./paid";
 import { getShopPrice } from "./shop-price";
 
 export function getPayment(ip: string, date?: string | undefined)
 {
+    var paidData = getPaidData(date);
     var cart = UserCard.getCart(ip, date);
     var list_seller = getListOfSeller(cart);
     var list_discount = new Map();
@@ -16,17 +18,21 @@ export function getPayment(ip: string, date?: string | undefined)
     cart.forEach((bill: any) =>
     {
         var totalFoodPrice = 0;
+        var isPaid = false;
         bill.cart.forEach((food: any) =>
         {
             var foodPrice = food.price;
             (food.topping || []).forEach((item: any) => foodPrice += item.price);
             var discount = list_discount.get(food.seller) || 0;
             totalFoodPrice += foodPrice * discount;
+            isPaid = paidData.includes(food.ip);
         });
+
         payment.push({
             name: bill.username,
             price: totalFoodPrice,
-            owned: IDENTITY.find(i => i.ip == ip)?.name == bill.username
+            owned: IDENTITY.find(i => i.ip == ip)?.name == bill.username,
+            paid: isPaid
         });
     });
 

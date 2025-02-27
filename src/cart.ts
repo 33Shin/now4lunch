@@ -137,7 +137,8 @@ class Cart
                     image: i.image,
                     topping: i.list_topping,
                     owned: i.auth == encrypt_ip || encrypt_ip == '::1',
-                    note: i.note
+                    note: i.note,
+                    ip: i.auth
                 }
             });
             list_cart.push({

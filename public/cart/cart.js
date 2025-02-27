@@ -79,7 +79,7 @@ function viewCart(cart_data) {
 }
 
 async function removeItem(user, index, auth) {
-    if (confirm("Chắc chưa?") == false) {
+    if (confirm("Chắc chưa?", "OK", "Cancel") == false) {
         return;
     }
     var res = await fetch('/remove', {

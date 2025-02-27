@@ -38,3 +38,9 @@ async function request() {
     var data = await response.json();
     onData(data);
 }
+
+async function confirmPaid() {
+    var response = await fetch('/confirm_paid?date=' + getDate());
+    var data = await response.json();
+    onData(data);
+}
